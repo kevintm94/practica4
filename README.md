@@ -1,4 +1,4 @@
-#PRACTICA NRO. 4
+# PRACTICA NRO. 4
 Integrantes
 Shirley Lima Mamani
 Rodrigo Nuñez Palma
