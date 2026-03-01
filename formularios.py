@@ -5,3 +5,7 @@ from wtforms.validators import DataRequired
 class FormAgregarTareas (FlaskForm):
     titulo = StringField('Titulo', validators=[DataRequired()])
     enviar = SubmitField('Enviar')
+
+class FormEditarTareas (FlaskForm):
+    titulo = StringField('Titulo', validators=[DataRequired()])
+    actualizar = SubmitField('Actualizar')

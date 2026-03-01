@@ -4,14 +4,46 @@
 
 <h2>Taller Apps - Sobre nosotros</h2>
 <h4>Bienvenido a este sitio de taller .....</h4>
-<form action="/sobrenosotros" method="post">
-    {{ form.csrf_token() }}
-    {{ form.titulo.label }}
-    {{ form.titulo }}
-    {{ form.enviar }}
-</form>
-{% if titulo %}
-    <h2>{{ titulo }}</h2>
-{% endif %}
+
+<div style="margin-bottom: 30px;">
+    <h3>Agregar Nueva Tarea</h3>
+    <form action="/sobrenosotros" method="post">
+        {{ form.csrf_token() }}
+        {{ form.titulo.label }}
+        {{ form.titulo }}
+        {{ form.enviar }}
+    </form>
+</div>
+
+<div>
+    <h3>Lista de Tareas</h3>
+    {% if tareas %}
+        <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th>ID</th>
+                    <th>Tarea</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tarea in tareas %}
+                    <tr>
+                        <td>{{ tarea.id }}</td>
+                        <td>{{ tarea.titulo }}</td>
+                        <td>
+                            <a href="{{ url_for('editar_tarea', id=tarea.id) }}" style="margin-right: 10px; padding: 5px 10px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;">
+                                Editar
+                            </a>
+                           
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay tareas registradas. ¡Crea una nueva tarea!</p>
+    {% endif %}
+</div>
 
 {% endblock %}

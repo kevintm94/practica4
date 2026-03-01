@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<h2>Editar Tarea</h2>
+<p>ID de la tarea: {{ tarea.id }}</p>
+
+<form action="{{ url_for('editar_tarea', id=tarea.id) }}" method="post">
+    {{ form.csrf_token() }}
+    
+    <div style="margin-bottom: 15px;">
+        {{ form.titulo.label }}
+        <br>
+        {{ form.titulo(size=50) }}
+        {% if form.titulo.errors %}
+            <ul style="color: red;">
+                {% for error in form.titulo.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    
+    <div>
+        {{ form.actualizar() }}
+        <a href="{{ url_for('sobrenosotros') }}" style="padding: 5px 15px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 4px; margin-left: 10px;">
+            Cancelar
+        </a>
+    </div>
+</form>
+
+{% endblock %}
