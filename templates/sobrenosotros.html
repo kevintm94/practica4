@@ -7,10 +7,10 @@
 <div style="margin-bottom: 30px;">
     <h3>Agregar Nueva Tarea</h3>
     <form action="/sobrenosotros" method="post">
-        {{ form.csrf_token() }}
-        {{ form.titulo.label }}
-        {{ form.titulo }}
-        {{ form.enviar }}
+        {{ form_agregar.csrf_token() }}
+        {{ form_agregar.titulo.label }}
+        {{ form_agregar.titulo }}
+        {{ form_agregar.enviar }}
     </form>
 </div>
 
@@ -34,7 +34,6 @@
                             <a href="{{ url_for('editar_tarea', id=tarea.id) }}" style="margin-right: 10px; padding: 5px 10px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;">
                                 Editar
                             </a>
-                           
                         </td>
                     </tr>
                 {% endfor %}
@@ -44,13 +43,6 @@
         <p>No hay tareas registradas. ¡Crea una nueva tarea!</p>
     {% endif %}
 </div>
-
-
-<form action="/sobrenosotros" method="post">
-    {{ form_agregar.csrf_token() }}
-    {{ form_agregar.titulo.label }} {{ form_agregar.titulo }}
-    {{ form_agregar.enviar }}
-</form>
 
 <!-- Formulario para eliminar tarea por ID -->
 <h3>Eliminar por ID</h3>

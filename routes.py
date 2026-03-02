@@ -11,17 +11,24 @@ def index():
 
 @app.route('/sobrenosotros', methods=['GET', 'POST'])
 def sobrenosotros():
-    formulario = formularios.FormAgregarTareas()
+    form_agregar = formularios.FormAgregarTareas()
+    form_eliminar = formularios.FormEliminarTarea()
     tareas = Tarea.query.all()
-    
-    if formulario.validate_on_submit() :
-        nueva_tarea = Tarea(titulo = formulario.titulo.data)
+
+
+    if form_agregar.validate_on_submit():
+        nueva_tarea = Tarea(titulo=form_agregar.titulo.data)
         db.session.add(nueva_tarea)
         db.session.commit()
-        print('Se envio correctamente', formulario.titulo.data)
-        return redirect(url_for('sobrenosotros'))
-    
-    return render_template('sobrenosotros.html', form = formulario, tareas = tareas)
+
+    if form_eliminar.validate_on_submit() and form_eliminar.id_tarea.data:
+        tarea = Tarea.query.get(form_eliminar.id_tarea.data)
+        if tarea:
+            db.session.delete(tarea)
+            db.session.commit()
+        return redirect('/sobrenosotros')
+
+    return render_template('sobrenosotros.html', form_agregar=form_agregar, form_eliminar=form_eliminar, tareas = tareas)
 
 @app.route('/editar_tarea/<int:id>', methods=['GET', 'POST'])
 def editar_tarea(id):
@@ -45,26 +52,6 @@ def eliminar_tarea(id):
     db.session.commit()
     print('Tarea eliminada correctamente')
     return redirect(url_for('sobrenosotros'))
-    
- 
-    form_agregar = formularios.FormAgregarTareas()
-    form_eliminar = formularios.FormEliminarTarea()
-
-    if form_agregar.validate_on_submit():
-        nueva_tarea = Tarea(titulo=form_agregar.titulo.data)
-        db.session.add(nueva_tarea)
-        db.session.commit()
-
-    if form_eliminar.validate_on_submit() and form_eliminar.id_tarea.data:
-        tarea = Tarea.query.get(form_eliminar.id_tarea.data)
-        if tarea:
-            db.session.delete(tarea)
-            db.session.commit()
-        return redirect('/sobrenosotros')
-
-    return render_template('sobrenosotros.html', 
-                           form_agregar=form_agregar, 
-                           form_eliminar=form_eliminar)
 
 @app.route('/saludo')
 def saludo():
